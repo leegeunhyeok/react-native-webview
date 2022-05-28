@@ -71,6 +71,14 @@ class WebView extends React.Component<AndroidWebViewProps, State> {
     return NativeModules.RNCWebView.isFileUploadSupported();
   };
 
+  static downloadBundle = async (bundleUrl: string) => {
+    return NativeModules.RNCWebView.downloadBundle(bundleUrl);
+  };
+
+  static getResourcePath = async () => {
+    return NativeModules.RNCWebView.getResourcePath();
+  };
+
   startUrl: string | null = null;
 
   state: State = {

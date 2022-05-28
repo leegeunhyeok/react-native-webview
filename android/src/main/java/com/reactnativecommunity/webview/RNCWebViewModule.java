@@ -128,6 +128,28 @@ public class RNCWebViewModule extends ReactContextBaseJavaModule implements Acti
   }
 
   @ReactMethod
+  public void downloadBundle(final String bundleUrl, final Promise promise) {
+    Context context = this.getReactApplicationContext();
+    final RNCBundleDownloader downloader = new RNCBundleDownloader(context, bundleUrl) {
+      @Override
+      protected void done(Boolean success, String message) {
+        if (success) {
+          promise.resolve(message);
+        } else {
+          promise.reject(message);
+        }
+      }
+    };
+    downloader.start();
+  }
+
+  @ReactMethod
+  public void getResourcePath(final Promise promise) {
+    String path = getReactApplicationContext().getCacheDir().toString();
+    promise.resolve(path);
+  }
+
+  @ReactMethod
   public void isFileUploadSupported(final Promise promise) {
     Boolean result = false;
     int current = Build.VERSION.SDK_INT;
